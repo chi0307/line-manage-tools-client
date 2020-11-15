@@ -19,9 +19,9 @@
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.18.1",
     "core-js": "^3.6.5",
-    "gridjs-vue": "^0.5.2",
     "nuxt": "^2.14.6",
     "vue": "^2.6.12",
+    "vue-good-table": "^2.21.1",
     "vue-router": "^3.4.8",
     "vuex": "^3.5.1"
   },

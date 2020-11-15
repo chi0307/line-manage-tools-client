@@ -6,9 +6,12 @@ export default function ({ $axios, redirect }) {
   $axios.onError((error) => {
     const code = parseInt(error.response && error.response.status);
     if (code === 401) {
+      localStorage.removeItem('auth');
+      $axios.setToken(false);
       redirect('/login');
     } else {
-      return Promise.reject(error.response);
+      console.error(error.response);
     }
+    return Promise.reject(error.response);
   });
 }

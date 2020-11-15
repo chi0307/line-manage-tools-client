@@ -9,6 +9,11 @@ const store = () =>
     state: {
       auth: null,
       users: [],
+      modal: {
+        status: false,
+        id: null,
+        options: {},
+      },
     },
     mutations: {
       SET_AUTH: function (state, { auth }) {
@@ -16,6 +21,9 @@ const store = () =>
       },
       SET_USERS: function (state, { users }) {
         state.users = users;
+      },
+      SET_MODAL: function (state, modal = { status: false, id: null, options: {} }) {
+        state.modal = modal;
       },
     },
     getters: {},
@@ -30,8 +38,9 @@ const store = () =>
         }
       },
       async getUsers({ commit }) {
-        const users = await this.$axios.$get('/users');
-        commit('SET_USERS', { users });
+        this.$axios.$get('/users').then((users) => {
+          commit('SET_USERS', { users });
+        });
       },
       async login({ commit }, { username, password }) {
         return this.$axios.$post('/login', { username, password }).then((auth) => {
@@ -47,6 +56,12 @@ const store = () =>
           localStorage.removeItem('auth');
           this.$axios.setToken(false);
         });
+      },
+      async openModal({ commit }, { id, options, title }) {
+        await commit('SET_MODAL', { status: true, id, options, title });
+      },
+      async closeModal({ commit }) {
+        await commit('SET_MODAL', { status: false, id: null, options: {} });
       },
     },
   });

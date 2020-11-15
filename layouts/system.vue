@@ -13,25 +13,30 @@
         </b-dropdown>
       </ul>
     </nav>
-    <div class="row at-row no-gutter">
+    <div class="row at-row no-gutter w-100">
       <at-menu router class="float-left col-4">
         <at-menu-item :to="{ name: 'user' }">帳號管理</at-menu-item>
         <at-menu-item :to="{ name: 'user' }">Rich Menu 管理</at-menu-item>
         <at-menu-item :to="{ name: 'user' }">推播管理</at-menu-item>
       </at-menu>
       <div class="float-left col-20">
-        <Nuxt class="m-5" />
+        <Nuxt class="m-4" />
       </div>
     </div>
+    <Modal />
   </div>
 </template>
 
 <script>
 import mixin from '~/plugins/mixin.js';
+import Modal from '~/components/Modal';
 
 export default {
   name: 'system',
   mixins: [mixin],
+  components: {
+    Modal,
+  },
   methods: {
     logout() {
       this.$store
