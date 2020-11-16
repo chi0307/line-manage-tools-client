@@ -17,3 +17,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 config.autoAddCss = false;
 library.add(fas);
 Vue.component('FontAwesomeIcon', FontAwesomeIcon);
+
+import apis from './apis.js';
+Vue.use(apis);

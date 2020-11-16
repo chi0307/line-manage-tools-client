@@ -25,6 +25,9 @@ export default {
   mixins: [mixin],
   created() {
     this.$store.dispatch('getUsers');
+    // this.$apis.getUsers.call(this).then((result) => {
+    //   console.log('created -> result', result);
+    // });
   },
   data() {
     return {
