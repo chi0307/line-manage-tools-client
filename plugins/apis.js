@@ -1,10 +1,9 @@
-const install = function (Vue) {
-  Vue.prototype.$apis = {
-    getUsers: function () {
-      console.log('install -> this', this);
-      return this.$axios.$get('/users');
-    },
+import index from '../apis/index.js';
+import users from '../apis/users.js';
+
+export default ($axios) => {
+  return {
+    ...index($axios),
+    ...users($axios),
   };
 };
-
-export default { install };

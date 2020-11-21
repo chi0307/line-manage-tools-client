@@ -38,12 +38,12 @@ const store = () =>
         }
       },
       async getUsers({ commit }) {
-        this.$axios.$get('/users').then((users) => {
+        this.$axios.apis.getUsers().then((users) => {
           commit('SET_USERS', { users });
         });
       },
       async login({ commit }, { username, password }) {
-        return this.$axios.$post('/login', { username, password }).then((auth) => {
+        return this.$axios.apis.login({ username, password }).then((auth) => {
           commit('SET_AUTH', { auth });
           localStorage.setItem('auth', JSON.stringify(auth));
           this.$axios.setToken(auth.token, 'Bearer');
@@ -51,7 +51,7 @@ const store = () =>
         });
       },
       async logout({ commit }) {
-        this.$axios.$post('/logout').then((result) => {
+        this.$axios.apis.logout().then((result) => {
           commit('SET_AUTH', { auth: null });
           localStorage.removeItem('auth');
           this.$axios.setToken(false);

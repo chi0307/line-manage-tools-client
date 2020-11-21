@@ -1,4 +1,8 @@
+import apis from './apis.js';
+
 export default function ({ $axios, redirect }) {
+  $axios.apis = apis($axios);
+
   $axios.onRequest((config) => {
     console.log('Making request to ' + config.url);
   });
