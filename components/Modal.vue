@@ -2,17 +2,20 @@
   <b-modal :visible="status" @hidden="hidden()" :hide-footer="true">
     <template #modal-title>{{ title }}</template>
     <EditUser v-if="id === 'EditUser'" :options="options" />
+    <DeleteUser v-if="id === 'DeleteUser'" :options="options" />
   </b-modal>
 </template>
 
 <script>
 import mixin from '~/plugins/mixin.js';
 import EditUser from '~/components/User/EditUser';
+import DeleteUser from '~/components/User/DeleteUser';
 
 export default {
   mixins: [mixin],
   components: {
     EditUser,
+    DeleteUser,
   },
   computed: {
     status: function () {

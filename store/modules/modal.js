@@ -4,16 +4,19 @@ export default {
     status: false,
     id: null,
     options: {},
+    title: null,
   },
   mutations: {
-    SET_MODAL(state, { status = false, id = null, options = {} }) {
+    SET_MODAL(state, { status = false, id = null, title = null, options = {} }) {
       if (status) {
         state.status = true;
         state.id = id;
+        state.title = title;
         state.options = options;
       } else {
         state.status = false;
         state.id = null;
+        state.title = null;
         state.options = {};
       }
     },

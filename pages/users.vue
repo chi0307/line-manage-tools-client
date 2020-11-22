@@ -7,7 +7,9 @@
       <template slot="table-row" slot-scope="props">
         <span v-if="props.column.field == 'actions'">
           <at-button type="primary" @click="updateUser(props.row)">編輯</at-button>
-          <at-button type="error" @click="deleteUser()">刪除</at-button>
+          <at-button type="error" @click="deleteUser(props.row)" v-if="vuexData.auth.loginUser !== props.row.username">
+            刪除
+          </at-button>
         </span>
         <span v-else>
           {{ props.formattedRow[props.column.field] }}
@@ -70,12 +72,21 @@ export default {
         title: '編輯帳號',
         options: {
           mode: 'update',
+          username: user.username,
           userId: user.id,
         },
       });
     },
-    deleteUser() {
+    deleteUser(user) {
       console.log('del');
+      this.$store.dispatch('modal/openModal', {
+        id: 'DeleteUser',
+        title: '刪除帳號',
+        options: {
+          username: user.username,
+          userId: user.id,
+        },
+      });
     },
   },
 };

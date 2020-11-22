@@ -4,17 +4,20 @@ export default {
     isLogin: false, // 是否登入
     token: null, // 存放jwt token
     expiresAt: null, // token 到期時間
+    loginUser: null,
   },
   mutations: {
-    SET_AUTH(state, { isLogin, token, expiresAt }) {
+    SET_AUTH(state, { isLogin, token, expiresAt, loginUser }) {
       if (isLogin && token && expiresAt) {
         state.isLogin = true;
         state.token = token;
         state.expiresAt = expiresAt;
+        state.loginUser = loginUser;
       } else {
         state.isLogin = false;
         state.token = null;
         state.expiresAt = null;
+        state.loginUser = null;
       }
     },
   },
@@ -28,7 +31,7 @@ export default {
     },
     login({ commit }, { username, password }) {
       return this.$axios.apis.login({ username, password }).then((auth) => {
-        commit('SET_AUTH', { isLogin: true, token: auth.token, expiresAt: auth.expires_at });
+        commit('SET_AUTH', { isLogin: true, token: auth.token, expiresAt: auth.expires_at, loginUser: username });
         this.$axios.setToken(auth.token, 'Bearer');
       });
     },

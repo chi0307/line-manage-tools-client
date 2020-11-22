@@ -15,9 +15,9 @@
     </nav>
     <div class="row at-row no-gutter w-100">
       <at-menu router class="float-left col-4">
-        <at-menu-item :to="{ name: 'user' }">帳號管理</at-menu-item>
-        <at-menu-item :to="{ name: 'user' }">Rich Menu 管理</at-menu-item>
-        <at-menu-item :to="{ name: 'user' }">推播管理</at-menu-item>
+        <at-menu-item :to="{ name: 'users' }">帳號管理</at-menu-item>
+        <at-menu-item :to="{ name: 'users' }">Rich Menu 管理</at-menu-item>
+        <at-menu-item :to="{ name: 'users' }">推播管理</at-menu-item>
       </at-menu>
       <div class="float-left col-20">
         <Nuxt class="m-4" />

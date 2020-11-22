@@ -6,7 +6,7 @@
       size="large"
       :status="username ? 'success' : ''"
       :icon="username ? 'check-circle' : ''"
-      :hidden="options.mode === 'update'"
+      :disabled="options.mode === 'update'"
     >
       <template slot="prepend">
         <span>帳號&emsp;&emsp;</span>
@@ -36,7 +36,7 @@
         <span>確認密碼</span>
       </template>
     </at-input>
-    <at-button type="success" :disabled="!checkSubmit">送出</at-button>
+    <at-button type="success" :disabled="!checkSubmit" @click="submit()">送出</at-button>
   </div>
 </template>
 
@@ -51,10 +51,16 @@ export default {
       default: () => {
         return {
           mode: null,
+          username: null,
           userId: null,
         };
       },
     },
+  },
+  created() {
+    if (this.options.mode === 'update') {
+      this.username = this.options.username;
+    }
   },
   data() {
     return {
@@ -63,15 +69,42 @@ export default {
       checkPassword: '',
     };
   },
-  created() {
-    console.log('options', this.options);
-  },
   computed: {
     checkSubmit() {
       return (
         (this.options.mode === 'insert' && this.username && this.password && this.password === this.checkPassword) ||
         (this.options.mode === 'update' && this.options.userId && this.password && this.password === this.checkPassword)
       );
+    },
+  },
+  methods: {
+    submit() {
+      if (this.checkSubmit) {
+        let username = this.username;
+        let password = this.password;
+        let userId = this.options.userId;
+        if (this.options.mode === 'insert') {
+          this.$store
+            .dispatch('users/insertUser', { username, password })
+            .then((result) => {
+              this.notify({ type: 'success', title: '新增資料成功！！' });
+              this.$store.dispatch('modal/closeModal');
+            })
+            .catch((err) => {
+              this.notify({ type: 'error', title: '新增資料失敗！！' });
+            });
+        } else {
+          this.$store
+            .dispatch('users/patchUser', { userId, password })
+            .then((result) => {
+              this.notify({ type: 'success', title: '更新資料成功！！' });
+              this.$store.dispatch('modal/closeModal');
+            })
+            .catch((err) => {
+              this.notify({ type: 'error', title: '更新資料失敗！！' });
+            });
+        }
+      }
     },
   },
 };

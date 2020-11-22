@@ -10,21 +10,25 @@ export default function ({ $axios, redirect, store }) {
   });
 
   $axios.onError((error) => {
-    const code = parseInt(error.response && error.response.status);
-    const url = error.response.config.url;
-    switch (code) {
-      case 401:
-        if (url !== '/logout') {
-          store.dispatch('auth/logout').then((result) => {
+    if (error.response) {
+      const code = parseInt(error.response && error.response.status);
+      const url = error.response.config.url;
+      switch (code) {
+        case 401:
+          if (url !== '/logout') {
+            store.dispatch('auth/logout').then((result) => {
+              redirect('/login');
+            });
+          } else {
             redirect('/login');
-          });
-        } else {
-          redirect('/login');
-        }
-        break;
-      default:
-        console.error(error.response);
+          }
+          break;
+        default:
+          console.error(error.response);
+      }
+      return Promise.reject(error.response);
+    } else {
+      console.error(error);
     }
-    return Promise.reject(error.response);
   });
 }
