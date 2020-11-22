@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     hidden() {
-      this.$store.dispatch('closeModal');
+      this.$store.dispatch('modal/closeModal');
     },
   },
 };

@@ -23,7 +23,8 @@
     "vue": "^2.6.12",
     "vue-good-table": "^2.21.1",
     "vue-router": "^3.4.8",
-    "vuex": "^3.5.1"
+    "vuex": "^3.5.1",
+    "vuex-persistedstate": "^4.0.0-beta.1"
   },
   "devDependencies": {
     "eslint-config-prettier": "^6.12.0",

@@ -1,6 +1,8 @@
+import Vue from 'vue';
 import apis from './apis.js';
 
-export default function ({ $axios, redirect }) {
+export default function ({ $axios, redirect, store }) {
+  Vue.prototype.apis = apis($axios);
   $axios.apis = apis($axios);
 
   $axios.onRequest((config) => {
@@ -9,12 +11,19 @@ export default function ({ $axios, redirect }) {
 
   $axios.onError((error) => {
     const code = parseInt(error.response && error.response.status);
-    if (code === 401) {
-      localStorage.removeItem('auth');
-      $axios.setToken(false);
-      redirect('/login');
-    } else {
-      console.error(error.response);
+    const url = error.response.config.url;
+    switch (code) {
+      case 401:
+        if (url !== '/logout') {
+          store.dispatch('auth/logout').then((result) => {
+            redirect('/login');
+          });
+        } else {
+          redirect('/login');
+        }
+        break;
+      default:
+        console.error(error.response);
     }
     return Promise.reject(error.response);
   });

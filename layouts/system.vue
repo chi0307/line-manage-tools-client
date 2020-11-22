@@ -40,13 +40,13 @@ export default {
   methods: {
     logout() {
       this.$store
-        .dispatch('logout')
+        .dispatch('auth/logout')
         .then((result) => {
-          console.log('登出成功！！');
+          this.notify({ title: '登出成功！！' });
           this.$router.replace('/login');
         })
         .catch((err) => {
-          console.log('登出失敗！！');
+          this.notify({ title: '登出失敗！！' });
         });
     },
   },

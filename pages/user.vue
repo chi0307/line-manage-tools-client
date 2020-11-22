@@ -24,10 +24,7 @@ export default {
   layout: 'system',
   mixins: [mixin],
   created() {
-    this.$store.dispatch('getUsers');
-    // this.$apis.getUsers.call(this).then((result) => {
-    //   console.log('created -> result', result);
-    // });
+    this.$store.dispatch('users/getUsers');
   },
   data() {
     return {
@@ -54,12 +51,12 @@ export default {
   },
   computed: {
     users() {
-      return this.vuexData.users;
+      return this.vuexData.users.users;
     },
   },
   methods: {
     insertUser() {
-      this.$store.dispatch('openModal', {
+      this.$store.dispatch('modal/openModal', {
         id: 'EditUser',
         title: '新增帳號',
         options: {
@@ -68,7 +65,7 @@ export default {
       });
     },
     updateUser(user) {
-      this.$store.dispatch('openModal', {
+      this.$store.dispatch('modal/openModal', {
         id: 'EditUser',
         title: '編輯帳號',
         options: {

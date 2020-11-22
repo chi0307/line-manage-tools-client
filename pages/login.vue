@@ -29,7 +29,10 @@
 </template>
 
 <script>
+import mixin from '~/plugins/mixin.js';
+
 export default {
+  mixins: [mixin],
   data() {
     return {
       username: '',
@@ -38,6 +41,9 @@ export default {
   },
   created() {
     window.addEventListener('keyup', this.listener);
+    if (this.vuexData && this.vuexData.auth && this.vuexData.auth.isLogin) {
+      this.$router.replace('/');
+    }
   },
   methods: {
     listener(evt) {
@@ -47,14 +53,15 @@ export default {
     },
     login() {
       this.$store
-        .dispatch('login', { username: this.username, password: this.password })
+        .dispatch('auth/login', { username: this.username, password: this.password })
         .then((auth) => {
+          this.notify({ title: '登入成功！！' });
           this.$router.replace('/');
         })
         .catch((err) => {
           console.log('login -> err', err);
           if (err.status === 400) {
-            console.log('帳號密碼錯誤，登入失敗！');
+            this.notify({ title: '帳號密碼錯誤，登入失敗！' });
           }
         });
     },
